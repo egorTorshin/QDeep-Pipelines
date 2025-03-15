@@ -28,10 +28,9 @@ matplotlib.use("agg")    # must select backend before importing pyplot
 import matplotlib.pyplot as plt
 
 # Set the solver we're going to use
-from dwave.system.samplers import DWaveSampler
-from dwave.system.composites import EmbeddingComposite
+from neal import SimulatedAnnealingSampler
 
-sampler = EmbeddingComposite(DWaveSampler())
+sampler = SimulatedAnnealingSampler()
 
 # Create empty graph
 G = nx.Graph()
