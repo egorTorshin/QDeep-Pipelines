@@ -15,22 +15,15 @@
 # Import networkx for graph tools
 import networkx as nx
 
-# Import dwave_networkx for d-wave graph tools/functions
-import dwave_networkx as dnx
-
-# Import matplotlib.pyplot to draw graphs on screen
-# note: since there are people without an interactive matplotlib backend
-# and since the code does not need said backend, we will explicitly call for
-# a non-interactive backend, Agg. See the following for details:
-# https://matplotlib.org/faq/usage_faq.html#what-is-a-backend
 import matplotlib
 matplotlib.use("agg")    # must select backend before importing pyplot
 import matplotlib.pyplot as plt
 
 # Set the solver we're going to use
-from neal import SimulatedAnnealingSampler
+from qdeepsdk import QDeepHybridSolver
 
-sampler = SimulatedAnnealingSampler()
+solver = QDeepHybridSolver()
+solver.token = "mtagdfsplb"
 
 # Create empty graph
 G = nx.Graph()
@@ -39,7 +32,7 @@ G = nx.Graph()
 G.add_edges_from([(1, 2), (1, 3), (2, 3), (3, 4), (3, 5), (4, 5), (4, 6), (5, 6), (6, 7)])
 
 # Find the minimum vertex cover, S
-S = dnx.min_vertex_cover(G, sampler=sampler, lagrange=5, num_reads=10, label='Example - Pipelines')
+S = nx.algorithms.approximation.min_weighted_vertex_cover(G, solver)
 
 # Print the solution for the user
 print('Minimum vertex cover found is', len(S))
